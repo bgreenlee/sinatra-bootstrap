@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sinatra Bootstrap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <% if settings.css_files == :blob %>
+      <link type="text/css" rel="stylesheet" href="/blob.css?modified=<%= File.mtime('public/blob.css').to_i %>">
+    <% else %>
+      <% settings.css_files.each do |css| %>
+        <link type="text/css" rel="stylesheet" href="/css/<%= css %>">
+      <% end %>
+    <% end %>
+  </head>
+  <body>
+    <%= yield %>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <% if settings.js_files == :blob %>
+      <script type="text/javascript" src="/blob.js?modified=<%= File.mtime('public/blob.js').to_i %>"></script>
+    <% else %>
+      <% settings.js_files.each do |js| %>
+        <script type="text/javascript" src="/js/<%= js %>"></script>
+      <% end %>
+    <% end %>
+  </body>
+</html>
